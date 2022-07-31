@@ -1,4 +1,5 @@
-
+export default function generateRosterHtml(roster) {
+  return `
     <!DOCTYPE html>
     <html lang="en">
       <head>
@@ -82,70 +83,62 @@
       <body>
         <header>My Team</header>
         <main>
-          
+          ${roster
+            .filter((employee) => employee.getRole() == "Manager")
+            .map(
+              (manager) => `
                 <div class="card">
                   <header>
-                    Jared
-                    <small>Manager</small>
+                    ${manager.getName()}
+                    <small>${manager.getRole()}</small>
                   </header>
                   <main>
-                    <div>ID: 5</div>
-                    <div>Email: <a href="mailto:jared34@yahoo.com">jared34@yahoo.com</a></div>
-                    <div>Office Number: 6</div>
+                    <div>ID: ${manager.getId()}</div>
+                    <div>Email: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></div>
+                    <div>Office Number: ${manager.officeNumber}</div>
                   </main>
                 </div>
-              
-          
+              `
+            )
+            .join("")}
+          ${roster
+            .filter((employee) => employee.getRole() == "Engineer")
+            .map(
+              (engineer) => `
                 <div class="card">
                   <header>
-                    Bob
-                    <small>Engineer</small>
+                    ${engineer.getName()}
+                    <small>${engineer.getRole()}</small>
                   </header>
                   <main>
-                    <div>ID: 32</div>
-                    <div>Email: <a href="mailto:bob23@gmail.com">bob23@gmail.com</a></div>
-                    <div>GitHub: Bobthebuilder@github.com</div>
+                    <div>ID: ${engineer.getId()}</div>
+                    <div>Email: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></div>
+                    <div>GitHub: <a target="_blank" href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a></div>
                   </main>
                 </div>
-              ,
+              `
+            )
+            .join("")}
+          ${roster
+            .filter((employee) => employee.getRole() == "Intern")
+            .map(
+              (intern) => `
                 <div class="card">
                   <header>
-                    Tyler
-                    <small>Engineer</small>
+                    ${intern.getName()}
+                    <small>${intern.getRole()}</small>
                   </header>
                   <main>
-                    <div>ID: 89</div>
-                    <div>Email: <a href="mailto:Tyler45@yahoo.com">Tyler45@yahoo.com</a></div>
-                    <div>GitHub: Tyler87@github.com</div>
+                    <div>ID: ${intern.getId()}</div>
+                    <div>Email: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></div>
+                    <div>School: ${intern.getSchool()}</div>
                   </main>
                 </div>
-              
-          
-                <div class="card">
-                  <header>
-                    Frank
-                    <small>Intern</small>
-                  </header>
-                  <main>
-                    <div>ID: 83</div>
-                    <div>Email: <a href="mailto:Frank99@gmail.com">Frank99@gmail.com</a></div>
-                    <div>School: Yale</div>
-                  </main>
-                </div>
-              ,
-                <div class="card">
-                  <header>
-                    Jake
-                    <small>Intern</small>
-                  </header>
-                  <main>
-                    <div>ID: 2</div>
-                    <div>Email: <a href="mailto:jake99@yahoo.com">jake99@yahoo.com</a></div>
-                    <div>School: Harvard</div>
-                  </main>
-                </div>
-              
+              `
+            )
+            .join("")}
         </main>
       </body>
     </html>
-  
+  `;
+}

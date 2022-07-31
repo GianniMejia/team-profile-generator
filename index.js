@@ -3,15 +3,12 @@ import fs from "fs";
 import Manager from "./lib/manager.js";
 import Engineer from "./lib/engineer.js";
 import Intern from "./lib/intern.js";
+import generateRosterHtml from "./src/roster-template.js";
 
 try {
-  const roster = {
-    manager: null,
-    engineers: [],
-    interns: [],
-  };
+  const roster = [];
 
-  roster.manager = await getManager();
+  roster.push(await getManager());
 
   let menuAnswers;
   do {
@@ -28,25 +25,19 @@ try {
       case "Enter an Engineer":
         {
           // Prompt for engineer
-          roster.engineers = [...roster.engineers, await getEngineer()];
+          roster.push(await getEngineer());
         }
         break;
       case "Enter an Intern":
         {
           // Prompt for intern
-          roster.interns = [...roster.interns, await getIntern()];
+          roster.push(await getIntern());
         }
         break;
       case "Finish":
         // Generate the HTML file
         console.log("roster: ", roster);
-        fs.writeFileSync(
-          "dist/roster.html",
-          `
-
-
-          `
-        );
+        fs.writeFileSync("dist/roster.html", generateRosterHtml(roster));
         break;
     }
   } while (menuAnswers["Menu"] != "Finish");
